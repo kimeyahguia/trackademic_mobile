@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet,
+  View, Text, TextInput, TouchableOpacity, StyleSheet, Image,
   ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView,
 } from 'react-native';
 import { useRouter, Link } from 'expo-router';
@@ -59,7 +59,11 @@ export default function RegisterScreen() {
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <LinearGradient colors={GRADIENTS.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
           <View style={styles.logoRow}>
-            <Ionicons name="school" size={26} color={COLORS.white} />
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
             <Text style={styles.logoText}>Trackademic</Text>
           </View>
           <Text style={styles.heroTitle}>Create Account</Text>
@@ -148,7 +152,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 32, borderBottomRightRadius: 32,
   },
   logoRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 20 },
-  logoText: { color: COLORS.white, fontSize: 16, fontWeight: '800' },
+  logoImage: { width: 45, height: 45 },
+  logoText: { color: COLORS.white, fontSize: 20, fontWeight: '800' },
   heroTitle: { color: COLORS.white, fontSize: 24, fontWeight: '800', marginBottom: 6 },
   heroSubtitle: { color: 'rgba(255,255,255,0.75)', fontSize: 13, lineHeight: 19 },
 

@@ -209,20 +209,20 @@ const styles = StyleSheet.create({
   emptyText: { color: COLORS.subtext, textAlign: 'center', marginTop: 30 },
 
   classCard: { borderRadius: 16, padding: 16, marginBottom: 16 },
-  classTitle: { color: COLORS.white, fontSize: 15, fontWeight: '800' },
-  classSection: { color: COLORS.white, fontSize: 12, opacity: 0.9, marginBottom: 12 },
+  classTitle: { color: COLORS.white, fontSize: 17, fontWeight: '800' },
+  classSection: { color: COLORS.white, fontSize: 14, opacity: 0.9, marginBottom: 12 },
   classInfoBox: {
     backgroundColor: COLORS.white, borderRadius: 10, padding: 12, marginBottom: 12,
   },
-  infoLine: { fontSize: 12, color: COLORS.text, marginBottom: 4 },
+  infoLine: { fontSize: 14, color: COLORS.text, marginBottom: 4 },
   infoLineLabel: { fontWeight: '700', color: COLORS.subtext },
-  scheduleLabel: { fontSize: 12, fontWeight: '700', color: COLORS.text, marginTop: 6 },
-  scheduleLine: { fontSize: 11, color: COLORS.subtext, marginTop: 2 },
+  scheduleLabel: { fontSize: 14, fontWeight: '700', color: COLORS.text, marginTop: 6 },
+  scheduleLine: { fontSize: 13, color: COLORS.subtext, marginTop: 2 },
   viewClassButton: {
     backgroundColor: COLORS.white, borderRadius: 8, paddingVertical: 10,
     alignItems: 'center',
   },
-  viewClassButtonText: { color: COLORS.primary, fontWeight: '700', fontSize: 13 },
+  viewClassButtonText: { color: COLORS.primary, fontWeight: '700', fontSize: 14 },
 
   modalOverlay: {
     flex: 1, backgroundColor: 'rgba(0,0,0,0.4)',

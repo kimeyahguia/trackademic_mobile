@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.16)',
     alignItems: 'center', justifyContent: 'center',
   },
-  headerTitle: { color: COLORS.white, fontSize: 15, fontWeight: '800' },
+  headerTitle: { color: COLORS.white, fontSize: 17, fontWeight: '800' },
   headerSub: { color: 'rgba(255,255,255,0.7)', fontSize: 12, marginTop: 2 },
 
   tabBar: {
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: COLORS.border,
   },
   tabItem: { flex: 1, alignItems: 'center', paddingVertical: 12 },
-  tabLabel: { fontSize: 12, color: COLORS.subtext, fontWeight: '600', textAlign: 'center' },
+  tabLabel: { fontSize: 13, color: COLORS.subtext, fontWeight: '600', textAlign: 'center' },
   tabLabelActive: { color: COLORS.primary },
   tabIndicator: { height: 2, width: '70%', backgroundColor: COLORS.primary, marginTop: 6, borderRadius: 2 },
 
@@ -319,8 +319,8 @@ const styles = StyleSheet.create({
     borderRadius: 18, padding: 22,
     alignItems: 'center', marginBottom: 14,
   },
-  codeLabel: { fontSize: 12, color: 'rgba(255,255,255,0.75)' },
-  codeValue: { fontSize: 24, fontWeight: '800', color: COLORS.white, marginVertical: 6, letterSpacing: 1 },
+  codeLabel: { fontSize: 13, color: 'rgba(255,255,255,0.75)' },
+  codeValue: { fontSize: 40, fontWeight: '800', color: COLORS.white, marginVertical: 6, letterSpacing: 1 },
   meetButton: {
     flexDirection: 'row', backgroundColor: COLORS.white, borderRadius: 10,
     paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', gap: 8, marginTop: 10,
@@ -359,12 +359,12 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderColor: COLORS.accent, borderRadius: 8,
     paddingVertical: 6, paddingHorizontal: 14,
   },
-  viewButtonText: { color: COLORS.accent, fontSize: 12, fontWeight: '600' },
+  viewButtonText: { color: COLORS.accent, fontSize: 13, fontWeight: '600' },
   downloadButton: {
     borderWidth: 1, borderColor: COLORS.border, borderRadius: 8,
     paddingVertical: 6, paddingHorizontal: 14,
   },
-  downloadButtonText: { color: COLORS.subtext, fontSize: 12, fontWeight: '600' },
+  downloadButtonText: { color: COLORS.subtext, fontSize: 13, fontWeight: '600' },
 
   // Classmates
   classmateRow: {
@@ -381,14 +381,14 @@ const styles = StyleSheet.create({
   // Attendance
   studentInfoCard: { backgroundColor: COLORS.card, borderRadius: 14, padding: 14, marginBottom: 14 },
   studentInfoRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4 },
-  studentInfoLabel: { fontSize: 12, color: COLORS.subtext, fontWeight: '600' },
-  studentInfoValue: { fontSize: 12, color: COLORS.text, fontWeight: '700' },
+  studentInfoLabel: { fontSize: 14, color: COLORS.subtext, fontWeight: '600' },
+  studentInfoValue: { fontSize: 14, color: COLORS.text, fontWeight: '700' },
   attendanceTable: { backgroundColor: COLORS.card, borderRadius: 14, overflow: 'hidden' },
   attendanceHeaderRow: {
     flexDirection: 'row', backgroundColor: COLORS.bg, padding: 10,
     borderBottomWidth: 1, borderBottomColor: COLORS.border,
   },
-  attendanceHeaderCell: { flex: 1, fontSize: 11, fontWeight: '700', color: COLORS.subtext },
+  attendanceHeaderCell: { flex: 1, fontSize: 14, fontWeight: '700', color: COLORS.subtext },
   attendanceRow: {
     flexDirection: 'row', alignItems: 'center', padding: 10,
     borderBottomWidth: 1, borderBottomColor: COLORS.border,

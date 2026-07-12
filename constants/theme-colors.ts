@@ -93,13 +93,13 @@ export function getScoreColor(score: number, total: number): string {
 }
 
 export const FONT_SIZES = {
-  xs: 11,
-  sm: 13,
-  base: 14,
-  md: 15,
-  lg: 16,
-  xl: 20,
-  xxl: 26,
+  xs: 14,
+  sm: 15,
+  base: 17,
+  md: 17,
+  lg: 20,
+  xl: 22,
+  xxl: 28,
 };
 
 export const TYPOGRAPHY = {

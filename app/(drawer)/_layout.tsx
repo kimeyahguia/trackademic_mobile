@@ -9,11 +9,16 @@ import { DrawerToggleButton } from '@react-navigation/drawer';
 import { COLORS } from '../../constants/theme-colors';
 import { getStoredUser, User } from '../../services/auth';
 import { getNotifications, markNotificationsRead, NotificationItem } from '../../services/notification';
+import { API_ENDPOINTS } from '../../constants/api';
 
 function TrackademicLogo() {
   return (
     <View style={styles.logoRow}>
-      <Ionicons name="school" size={20} color={COLORS.primary} />
+      <Image
+        source={require('../../assets/images/logo.png')}
+        style={styles.logoImage}
+        resizeMode="contain"
+      />
       <Text style={styles.logoText}>Trackademic</Text>
     </View>
   );
@@ -91,7 +96,9 @@ function HeaderRight() {
             >
               <Image
                 source={{
-                  uri: user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.first_name || 'Guest'}`,
+                  uri: user?.has_avatar
+                    ? API_ENDPOINTS.avatarUrl(user.id)
+                    : `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.first_name || 'Guest'}`,
                 }}
                 style={styles.userAvatar}
               />
@@ -190,8 +197,10 @@ export default function DrawerLayout() {
 }
 
 const styles = StyleSheet.create({
-  logoRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  logoText: { fontSize: 16, fontWeight: '800', color: COLORS.text },
+    logoRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+    logoImage: { width: 24, height: 24 },
+    logoText: { fontSize: 20, fontWeight: '800', color: COLORS.text },
+
 
   overlay: { flex: 1, backgroundColor: 'rgba(14,42,34,0.25)' },
 
@@ -211,7 +220,7 @@ const styles = StyleSheet.create({
   },
   userChip: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   userAvatar: { width: 32, height: 32, borderRadius: 16, backgroundColor: COLORS.border },
-  userName: { fontSize: 12, fontWeight: '700', color: COLORS.text, maxWidth: 110 },
+  userName: { fontSize: 16, fontWeight: '700', color: COLORS.text, maxWidth: 110 },
   userRole: { fontSize: 10, color: COLORS.subtext },
 
   notifIconCircle: {
@@ -230,7 +239,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 3,
   },
-  badgeText: { color: COLORS.white, fontSize: 9, fontWeight: '700' },
+  badgeText: { color: COLORS.white, fontSize: 10, fontWeight: '700' },
 
   notifPanel: {
     position: 'absolute',

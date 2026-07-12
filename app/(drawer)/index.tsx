@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, Image,
   ActivityIndicator, RefreshControl, TouchableOpacity,
@@ -6,10 +6,10 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
-import { useRouter } from 'expo-router';
-import { api, API_ENDPOINTS } from '../../constants/api';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { COLORS, GRADIENTS } from '../../constants/theme-colors';
 import { getStoredUser, getProfile, User } from '../../services/auth';
+import { api, API_ENDPOINTS } from '../../constants/api';
 
 type Announcement = {
   id: number;
@@ -26,31 +26,38 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (signal?: AbortSignal) => {
     try {
-      // 1. Agad ipakita yung cached user (para hindi blangko habang naglo-load)
       const cachedUser = await getStoredUser();
-      if (cachedUser) setUser(cachedUser);
+      if (cachedUser && !signal?.aborted) setUser(cachedUser);
 
-      // 2. Kunin yung latest data mula DB (in case may na-edit sa profile)
       if (cachedUser?.id) {
         const profileRes = await getProfile(cachedUser.id);
-        if (profileRes.success && profileRes.user) {
+        if (!signal?.aborted && profileRes.success && profileRes.user) {
           setUser(profileRes.user);
         }
       }
 
       const res = await api.get(API_ENDPOINTS.announcements);
-      if (res.data.success) setAnnouncements(res.data.data);
+      if (!signal?.aborted && res.data.success) setAnnouncements(res.data.data);
     } catch (err) {
       if (axios.isAxiosError(err)) console.log('Home fetch error:', err.message);
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (!signal?.aborted) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
   }, []);
 
-  useEffect(() => { fetchData(); }, [fetchData]);
+  useFocusEffect(
+    useCallback(() => {
+      const controller = new AbortController();
+      setLoading(true);
+      fetchData(controller.signal);
+      return () => controller.abort();
+    }, [fetchData])
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -74,7 +81,11 @@ export default function HomeScreen() {
         <View style={styles.heroTop}>
           <View style={styles.heroUserRow}>
             <Image
-              source={{ uri: user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.first_name || 'Guest'}` }}
+              source={{
+                uri: user?.has_avatar
+                  ? API_ENDPOINTS.avatarUrl(user.id)
+                  : `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.first_name || 'Guest'}`,
+              }}
               style={styles.heroAvatar}
             />
             <View>
@@ -153,13 +164,13 @@ const styles = StyleSheet.create({
   heroTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 22 },
   heroUserRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   heroAvatar: { width: 42, height: 42, borderRadius: 21, borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.4)' },
-  heroGreeting: { color: COLORS.white, fontSize: 15, fontWeight: '700' },
-  heroSub: { color: 'rgba(255,255,255,0.7)', fontSize: 11, marginTop: 2 },
+  heroGreeting: { color: COLORS.white, fontSize: 30, fontWeight: '700' },
+  heroSub: { color: 'rgba(255,255,255,0.7)', fontSize: 14, marginTop: 2 },
   heroBell: {
     width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.14)',
     alignItems: 'center', justifyContent: 'center',
   },
-  heroLabel: { color: 'rgba(255,255,255,0.65)', fontSize: 12 },
+  heroLabel: { color: 'rgba(255,255,255,0.65)', fontSize: 14 },
   heroValue: { color: COLORS.white, fontSize: 30, fontWeight: '800', marginTop: 4, marginBottom: 22 },
   quickActionsRow: { flexDirection: 'row', justifyContent: 'space-between' },
   quickAction: { alignItems: 'center', gap: 6 },
@@ -167,18 +178,18 @@ const styles = StyleSheet.create({
     width: 44, height: 44, borderRadius: 22, backgroundColor: 'rgba(255,255,255,0.14)',
     alignItems: 'center', justifyContent: 'center',
   },
-  quickActionLabel: { color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: '600' },
+  quickActionLabel: { color: 'rgba(255,255,255,0.85)', fontSize: 14, fontWeight: '600' },
   promoCard: {
     borderRadius: 20, padding: 20, marginTop: -34, marginBottom: 22,
     flexDirection: 'row', alignItems: 'center', overflow: 'hidden',
   },
-  promoTag: { color: 'rgba(255,255,255,0.75)', fontSize: 10, fontWeight: '800', letterSpacing: 1 },
-  promoTitle: { color: COLORS.white, fontSize: 17, fontWeight: '800', marginTop: 6, marginBottom: 14, lineHeight: 22 },
+  promoTag: { color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '800', letterSpacing: 1 },
+  promoTitle: { color: COLORS.white, fontSize: 18, fontWeight: '800', marginTop: 6, marginBottom: 14, lineHeight: 22 },
   promoButton: {
     backgroundColor: COLORS.white, borderRadius: 10, paddingVertical: 8, paddingHorizontal: 16,
     alignSelf: 'flex-start',
   },
-  promoButtonText: { color: COLORS.primary, fontWeight: '700', fontSize: 12 },
+  promoButtonText: { color: COLORS.primary, fontWeight: '700', fontSize: 13 },
   promoIcon: { position: 'absolute', right: -6, bottom: -10 },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12 },
   sectionTitle: { fontSize: 15, fontWeight: '800', color: COLORS.text },

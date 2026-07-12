@@ -68,32 +68,40 @@ export default function ProfileScreen() {
     );
   };
 
-  const handleSave = async () => {
-    if (!user) return;
-    if (!firstName.trim() || !lastName.trim() || !email.trim()) {
-      showError('Missing Fields', 'First name, last name, and email are required.');
-      return;
-    }
+    const handleSave = async () => {
+      if (!user) return;
+      if (!firstName.trim() || !lastName.trim() || !email.trim()) {
+        showError('Missing Fields', 'First name, last name, and email are required.');
+        return;
+      }
 
-    setSaving(true);
-    const res = await updateProfile({
-      id: user.id,
-      first_name: firstName.trim(),
-      middle_initial: middleInitial.trim(),
-      last_name: lastName.trim(),
-      email: email.trim(),
-      course: course.trim(),
-    });
-    setSaving(false);
+      showConfirm(
+        'Save Changes',
+        'Are you sure you want to save these changes to your profile?',
+        async () => {
+          setSaving(true);
+          const res = await updateProfile({
+            id: user.id,
+            first_name: firstName.trim(),
+            middle_initial: middleInitial.trim(),
+            last_name: lastName.trim(),
+            email: email.trim(),
+            course: course.trim(),
+          });
+          setSaving(false);
 
-    if (res.success && res.user) {
-      setUser(res.user);
-      setEditing(false);
-      showSuccess('Saved!', 'Your profile has been updated.');
-    } else {
-      showError('Update Failed', res.message || 'Something went wrong.');
-    }
-  };
+          if (res.success && res.user) {
+            setUser(res.user);
+            setEditing(false);
+            showSuccess('Saved!', 'Your profile has been updated.');
+          } else {
+            showError('Update Failed', res.message || 'Something went wrong.');
+          }
+        },
+        'Save',
+        'Cancel'
+      );
+    };
 
   const handlePickAvatar = async () => {
     if (!user) return;
@@ -139,11 +147,11 @@ export default function ProfileScreen() {
     <>
       <Stack.Screen options={{ headerShown: false }} />
       <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
-        <LinearGradient colors={GRADIENTS.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.cover}>
-          <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-            <Ionicons name="arrow-back" size={20} color={COLORS.white} />
-          </TouchableOpacity>
-        </LinearGradient>
+        <LinearGradient colors={GRADIENTS.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.cover} />
+
+        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+          <Ionicons name="arrow-back" size={20} color={COLORS.white} />
+        </TouchableOpacity>
 
         <View style={styles.avatarCard}>
           <View style={styles.avatarWrap}>
@@ -271,10 +279,15 @@ function Field({
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.bg },
-  cover: { width: '100%', height: 130, justifyContent: 'flex-end', paddingBottom: 12, paddingHorizontal: 16 },
+  cover: { width: '100%', height: 130 },
   backButton: {
-    width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.18)',
+    position: 'absolute',
+    top: 46,
+    left: 16,
+    width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.22)',
     alignItems: 'center', justifyContent: 'center',
+    zIndex: 20,
+    elevation: 20,
   },
   avatarCard: {
     backgroundColor: COLORS.card, alignItems: 'center', paddingBottom: 18,

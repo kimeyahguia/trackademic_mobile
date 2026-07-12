@@ -13,6 +13,7 @@ export type User = {
   role: string;
   course: string | null;
   avatar: string | null;
+  has_avatar?: boolean;
 };
 
 export async function login(email: string, password: string) {

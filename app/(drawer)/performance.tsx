@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 }, elevation: 2,
   },
-  summaryLabel: { fontSize: 12, color: COLORS.subtext },
+  summaryLabel: { fontSize: 14, color: COLORS.subtext },
   summaryValue: { fontSize: 26, fontWeight: '800', color: COLORS.text, marginTop: 4 },
   summaryIcon: { width: 46, height: 46, borderRadius: 23, alignItems: 'center', justifyContent: 'center' },
 
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.card, borderWidth: 1, borderColor: COLORS.border,
     borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10,
   },
-  filterText: { fontSize: 12, color: COLORS.text, flexShrink: 1 },
+  filterText: { fontSize: 14, color: COLORS.text, flexShrink: 1 },
   emptyText: { color: COLORS.subtext, textAlign: 'center', marginTop: 30 },
 
   classGroup: {
